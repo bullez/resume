@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Хайрльварин Булат — Коммуникационный дизайнер & Design Technologist. 10+ лет опыта в брендинге, визуальных системах и автоматизации дизайн-процессов (Python, JSX).">
+<meta name="keywords" content="коммуникационный дизайнер, communication designer, design technologist, брендинг, визуальные системы, автоматизация, Python, JSX, Illustrator, дизайн упаковки, prepress, Уфа, Москва">
+<title>Хайрльварин Булат | Коммуникационный дизайнер & Design Technologist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+    --black: #0A0A0A;
+    --dark-gray: #121212;
+    --medium-gray: #1A1A1A;
+    --light-gray: #2A2A2A;
+    --accent: #0066FF;
+    --accent-light: #3399FF;
+    --accent-dark: #0047B3;
+    --text: #FFFFFF;
+    --text-muted: #AAAAAA;
+    --success: #00D97E;
+    --purple: #8B5CF6;
+    --pink: #EC4899;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background-color: var(--black);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+    cursor: none;
+}
+
+/* ===== CUSTOM CURSOR ===== */
+.cursor {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transition: all 0.1s ease;
+    mix-blend-mode: difference;
+}
+
+.cursor-dot {
+    position: fixed;
+    width: 6px;
+    height: 6px;
+    background: var(--accent-light);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transition: all 0.05s ease;
+}
+
+.cursor.hover {
+    width: 50px;
+    height: 50px;
+    background: rgba(0, 102, 255, 0.1);
+    border-color: var(--accent-light);
+}
+
+@media (max-width: 768px) {
+    .cursor, .cursor-dot { display: none; }
+    body { cursor: auto; }
+}
+
+/* ===== SCROLL PROGRESS ===== */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-light), var(--purple));
+    z-index: 10000;
+    transition: width 0.1s;
+    box-shadow: 0 0 10px var(--accent);
+}
+
+/* ===== ANIMATED BACKGROUND ===== */
+.bg-grid {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(0,102,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,102,255,0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.floating-blob {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.15;
+    pointer-events: none;
+    z-index: 0;
+    animation: float 20s ease-in-out infinite;
+}
+
+.blob-1 { width: 400px; height: 400px; background: var(--accent); top: 10%; right: -100px; animation-delay: 0s; }
+.blob-2 { width: 300px; height: 300px; background: var(--purple); bottom: 20%; left: -100px; animation-delay: -7s; }
+.blob-3 { width: 350px; height: 350px; background: var(--pink); top: 50%; right: 20%; animation-delay: -14s; }
+
+@keyframes float {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    25% { transform: translate(50px, -50px) scale(1.1); }
+    50% { transform: translate(-30px, 30px) scale(0.9); }
+    75% { transform: translate(40px, 20px) scale(1.05); }
+}
+
+/* ===== PARTICLES ===== */
+.particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+.particle {
+    position: absolute; width: 2px; height: 2px; background: var(--accent-light); border-radius: 50%; opacity: 0.5;
+    animation: particleFloat 15s linear infinite;
+}
+@keyframes particleFloat {
+    0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.5; }
+    90% { opacity: 0.5; }
+    100% { transform: translateY(-100px) rotate(720deg); opacity: 0; }
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideInLeft { from { opacity: 0; transform: translateX(-60px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes pulse { 0%, 100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.1); opacity: 0.8; } }
+@keyframes gradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+@keyframes borderGlow { 0%, 100% { box-shadow: 0 0 20px rgba(0,102,255,0.1); } 50% { box-shadow: 0 0 40px rgba(0,102,255,0.3); } }
+@keyframes glitch { 0%, 100% { transform: translate(0); } 20% { transform: translate(-2px, 2px); } 40% { transform: translate(-2px, -2px); } 60% { transform: translate(2px, 2px); } 80% { transform: translate(2px, -2px); } }
+@keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes morph { 0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; } 50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; } }
+@keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+
+.animate-on-scroll { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+.animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
+
+/* ===== NAVIGATION ===== */
+nav {
+    position: fixed; top: 0; width: 100%; background: rgba(10, 10, 10, 0.85); backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px); z-index: 1000; padding: 18px 5%; border-bottom: 1px solid var(--light-gray); transition: all 0.3s;
+}
+nav.scrolled { padding: 12px 5%; background: rgba(10, 10, 10, 0.95); box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+nav ul { display: flex; justify-content: center; gap: 35px; list-style: none; flex-wrap: wrap; }
+nav a { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 0.95rem; position: relative; transition: color 0.3s; padding: 5px 0; }
+nav a::after { content: ''; position: absolute; bottom: -6px; left: 0; width: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent-light)); transition: width 0.3s ease; box-shadow: 0 0 10px var(--accent); }
+nav a:hover, nav a.active { color: var(--text); }
+nav a:hover::after, nav a.active::after { width: 100%; }
+
+/* ===== HERO ===== */
+.hero {
+    min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 140px 5% 80px;
+    background: radial-gradient(ellipse at top right, rgba(0,102,255,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom left, rgba(139,92,246,0.05) 0%, transparent 50%), var(--black);
+    position: relative; overflow: hidden;
+}
+.hero::before {
+    content: ''; position: absolute; top: -30%; right: -10%; width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(0,102,255,0.12) 0%, transparent 70%);
+    animation: pulse 6s ease-in-out infinite; pointer-events: none;
+}
+.hero-container {
+    max-width: 1300px; width: 100%; display: grid; grid-template-columns: 1fr 1.8fr; gap: 80px; align-items: center; position: relative; z-index: 1;
+}
+.hero-photo { position: relative; animation: slideInLeft 1s ease; }
+.hero-photo-wrapper { position: relative; display: inline-block; }
+.hero-photo img {
+    width: 100%; max-width: 480px; border-radius: 20px; box-shadow: 0 25px 80px rgba(0,0,0,0.6);
+    border: 2px solid var(--light-gray); transition: all 0.4s ease; display: block; position: relative; z-index: 2;
+}
+.hero-photo img:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 35px 100px rgba(0,102,255,0.3); border-color: var(--accent); }
+.hero-photo::after {
+    content: ''; position: absolute; top: 20px; left: 20px; right: -20px; bottom: -20px;
+    border: 2px solid var(--accent); border-radius: 20px; z-index: 1; transition: all 0.4s ease; opacity: 0.5;
+}
+.hero-photo:hover::after { top: 12px; left: 12px; opacity: 1; }
+.hero-photo::before {
+    content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 120%; height: 120%; background: linear-gradient(135deg, rgba(0,102,255,0.1), rgba(139,92,246,0.1));
+    animation: morph 8s ease-in-out infinite; z-index: 0;
+}
+
+.tech-badge {
+    position: absolute; background: var(--medium-gray); border: 1px solid var(--light-gray); padding: 8px 16px;
+    border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: var(--accent-light); z-index: 3;
+    animation: floatBadge 3s ease-in-out infinite; box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+}
+.tech-badge:nth-child(2) { top: 10%; right: -20px; animation-delay: 0s; }
+.tech-badge:nth-child(3) { bottom: 20%; left: -30px; animation-delay: -1s; }
+.tech-badge:nth-child(4) { bottom: 5%; right: 10%; animation-delay: -2s; }
+@keyframes floatBadge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+.hero-content h1 {
+    font-size: 3.5rem; font-weight: 900; letter-spacing: -2px; margin-bottom: 12px; line-height: 1.05;
+    background: linear-gradient(135deg, #fff 0%, var(--accent-light) 50%, var(--purple) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    background-size: 200% 200%; animation: gradient 5s ease infinite; position: relative;
+}
+.hero-content h1:hover { animation: gradient 5s ease infinite, glitch 0.3s ease; }
+
+.hero-content .title {
+    font-size: 1.3rem; color: var(--accent-light); font-weight: 600; margin-bottom: 25px;
+    letter-spacing: -0.5px; font-family: 'JetBrains Mono', monospace;
+}
+.hero-content .title::before { content: '> '; color: var(--success); }
+
+.hero-content .description { font-size: 1.15rem; color: var(--text-muted); margin-bottom: 30px; line-height: 1.7; max-width: 650px; }
+
+.hero-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 35px; }
+.tag {
+    padding: 10px 18px; background: var(--medium-gray); border: 1px solid var(--light-gray); border-radius: 8px;
+    font-size: 0.88rem; font-weight: 500; transition: all 0.3s; cursor: default; position: relative; overflow: hidden;
+}
+.tag::before {
+    content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0,102,255,0.2), transparent); transition: left 0.5s;
+}
+.tag:hover::before { left: 100%; }
+.tag:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,102,255,0.2); background: rgba(0,102,255,0.1); }
+
+.salary-block {
+    margin-bottom: 25px; padding: 22px 28px; background: var(--medium-gray); border-radius: 12px;
+    border: 1px solid var(--light-gray); border-left: 4px solid var(--accent); animation: borderGlow 4s ease-in-out infinite;
+    position: relative; overflow: hidden;
+}
+.salary-block::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0,102,255,0.05), transparent); animation: shimmer 3s infinite;
+}
+.salary-block .label { font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; position: relative; }
+.salary-block .values { display: flex; gap: 30px; flex-wrap: wrap; position: relative; }
+.salary-block .city { display: flex; flex-direction: column; }
+.salary-block .city-name { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px; }
+.salary-block .city-salary { font-size: 1.4rem; font-weight: 800; color: var(--accent-light); font-family: 'JetBrains Mono', monospace; }
+
+.relocation-block {
+    margin-bottom: 30px; padding: 20px 24px; background: rgba(0,102,255,0.05); border-radius: 10px;
+    border-left: 4px solid var(--accent); position: relative; overflow: hidden;
+}
+.relocation-block::before {
+    content: '✈️'; position: absolute; top: 10px; right: 15px; font-size: 2rem; opacity: 0.2; animation: floatBadge 2s ease-in-out infinite;
+}
+.relocation-block strong { color: var(--accent-light); display: block; margin-bottom: 8px; font-size: 1rem; position: relative; }
+.relocation-block p { color: var(--text-muted); font-size: 0.92rem; line-height: 1.6; margin: 0; position: relative; }
+
+.hero-contacts { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 30px; }
+.hero-contacts a {
+    color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 8px; font-weight: 500;
+    padding: 12px 22px; background: var(--medium-gray); border-radius: 8px; border: 1px solid var(--light-gray);
+    transition: all 0.3s; font-size: 0.95rem; position: relative; overflow: hidden;
+}
+.hero-contacts a::before {
+    content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0; background: var(--accent);
+    border-radius: 50%; transform: translate(-50%, -50%); transition: all 0.5s; z-index: 0;
+}
+.hero-contacts a:hover::before { width: 300px; height: 300px; }
+.hero-contacts a:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,102,255,0.3); }
+.hero-contacts a > * { position: relative; z-index: 1; }
+
+.cta-button {
+    display: inline-block; background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+    color: var(--text); padding: 18px 40px; text-decoration: none; font-weight: 700; font-size: 1.1rem;
+    border-radius: 10px; transition: all 0.3s; border: none; cursor: pointer; box-shadow: 0 10px 30px rgba(0,102,255,0.3);
+    letter-spacing: 0.5px; position: relative; overflow: hidden;
+}
+.cta-button::before {
+    content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); transition: left 0.5s;
+}
+.cta-button:hover::before { left: 100%; }
+.cta-button:hover { transform: translateY(-3px); box-shadow: 0 15px 45px rgba(0,102,255,0.5); }
+
+/* ===== SECTIONS ===== */
+section { padding: 100px 5%; position: relative; z-index: 1; }
+.section-header { margin-bottom: 60px; }
+.section-title { font-size: 2.5rem; font-weight: 800; text-transform: uppercase; letter-spacing: -1px; position: relative; display: inline-block; margin-bottom: 15px; }
+.section-title::after {
+    content: ''; position: absolute; bottom: -12px; left: 0; width: 80px; height: 4px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-light)); border-radius: 2px; box-shadow: 0 0 10px var(--accent);
+}
+.section-subtitle { color: var(--text-muted); font-size: 1.1rem; max-width: 700px; margin-top: 25px; }
+
+/* ===== ABOUT ===== */
+.about { background: var(--dark-gray); border-top: 1px solid var(--light-gray); border-bottom: 1px solid var(--light-gray); }
+.about-content { max-width: 900px; font-size: 1.15rem; color: var(--text-muted); line-height: 1.8; }
+.about-content p { margin-bottom: 25px; }
+.highlight { color: var(--text); font-weight: 600; }
+.highlight-accent { color: var(--accent-light); font-weight: 600; }
+
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 25px; margin-top: 60px; }
+.stat-card {
+    background: var(--medium-gray); padding: 35px 25px; border: 1px solid var(--light-gray); border-radius: 12px;
+    text-align: center; transition: all 0.4s; position: relative; overflow: hidden;
+}
+.stat-card::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-light)); transform: scaleX(0); transform-origin: left; transition: transform 0.4s;
+}
+.stat-card:hover { border-color: var(--accent); transform: translateY(-8px); box-shadow: 0 15px 40px rgba(0,102,255,0.15); }
+.stat-card:hover::before { transform: scaleX(1); }
+.stat-number { font-size: 3rem; font-weight: 900; color: var(--accent-light); display: block; margin-bottom: 8px; letter-spacing: -1px; font-family: 'JetBrains Mono', monospace; }
+.stat-label { font-size: 0.95rem; color: var(--text-muted); font-weight: 500; }
+
+/* ===== SKILLS ===== */
+.skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin-top: 60px; }
+.skill-category {
+    background: var(--medium-gray); padding: 40px; border: 1px solid var(--light-gray); border-radius: 16px;
+    transition: all 0.4s; position: relative; overflow: hidden;
+}
+.skill-category::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-light)); transform: scaleX(0); transform-origin: left; transition: transform 0.4s;
+}
+.skill-category:hover { border-color: var(--accent); transform: translateY(-5px); box-shadow: 0 20px 50px rgba(0,102,255,0.1); }
+.skill-category:hover::before { transform: scaleX(1); }
+.skill-category h3 { font-size: 1.4rem; margin-bottom: 25px; color: var(--accent-light); display: flex; align-items: center; gap: 12px; font-weight: 700; }
+.skill-list { list-style: none; }
+.skill-list li { padding: 12px 0; color: var(--text-muted); border-bottom: 1px solid var(--light-gray); display: flex; align-items: center; gap: 12px; transition: all 0.3s; font-size: 0.98rem; }
+.skill-list li:last-child { border-bottom: none; }
+.skill-list li:hover { color: var(--text); padding-left: 8px; }
+.skill-list li::before { content: '▸'; color: var(--accent); font-weight: bold; font-size: 1.1rem; }
+
+/* ===== EXPERIENCE ===== */
+.experience { background: var(--dark-gray); }
+.timeline { position: relative; max-width: 1000px; }
+.timeline::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px;
+    background: linear-gradient(180deg, var(--accent) 0%, var(--purple) 50%, var(--light-gray) 100%);
+}
+.timeline-item {
+    background: var(--medium-gray); padding: 40px; border: 1px solid var(--light-gray); border-radius: 16px;
+    margin-bottom: 30px; margin-left: 40px; position: relative; transition: all 0.4s;
+}
+.timeline-item::before {
+    content: ''; position: absolute; left: -46px; top: 40px; width: 14px; height: 14px; background: var(--accent);
+    border-radius: 50%; border: 3px solid var(--dark-gray); box-shadow: 0 0 0 4px rgba(0,102,255,0.2); transition: all 0.3s;
+}
+.timeline-item:hover { border-color: var(--accent); transform: translateX(10px); box-shadow: 0 15px 50px rgba(0,102,255,0.1); }
+.timeline-item:hover::before { background: var(--accent-light); box-shadow: 0 0 0 4px rgba(0,102,255,0.4), 0 0 20px var(--accent); }
+
+.timeline-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
+.timeline-title h3 { font-size: 1.4rem; margin-bottom: 8px; color: var(--text); font-weight: 700; }
+.timeline-company { color: var(--accent-light); font-weight: 600; font-size: 1.05rem; }
+.timeline-date {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%); color: var(--text);
+    padding: 8px 16px; border-radius: 8px; font-weight: 600; font-size: 0.88rem; white-space: nowrap; font-family: 'JetBrains Mono', monospace;
+}
+.timeline-content ul { list-style: none; color: var(--text-muted); margin-bottom: 20px; }
+.timeline-content li { padding: 8px 0; padding-left: 20px; position: relative; line-height: 1.6; }
+.timeline-content li::before { content: '•'; position: absolute; left: 0; color: var(--accent); font-size: 1.2rem; }
+
+.achievement {
+    margin-top: 20px; padding: 25px; background: rgba(0,102,255,0.05); border-left: 4px solid var(--accent); border-radius: 0 12px 12px 0;
+}
+.achievement strong { color: var(--text); display: block; margin-bottom: 15px; font-size: 1.05rem; }
+.achievement ul { list-style: none; }
+.achievement li { padding: 8px 0; padding-left: 28px; position: relative; color: var(--text-muted); line-height: 1.6; }
+.achievement li::before { content: '✓'; position: absolute; left: 0; color: var(--success); font-weight: bold; font-size: 1.1rem; }
+
+/* ===== PROJECTS ===== */
+.projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; margin-top: 60px; }
+.project-card {
+    background: var(--medium-gray); border: 1px solid var(--light-gray); border-radius: 16px;
+    overflow: hidden; transition: all 0.4s; position: relative;
+}
+.project-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-light)); transform: scaleX(0); transition: transform 0.4s; z-index: 2;
+}
+.project-card:hover { border-color: var(--accent); transform: translateY(-8px); box-shadow: 0 25px 60px rgba(0,102,255,0.15); }
+.project-card:hover::before { transform: scaleX(1); }
+
+.project-header { background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%); padding: 30px; color: var(--text); }
+.project-header h3 { font-size: 1.4rem; margin-bottom: 15px; font-weight: 700; }
+.project-tech { display: flex; gap: 8px; flex-wrap: wrap; }
+.project-tech span { background: rgba(255,255,255,0.2); padding: 5px 12px; border-radius: 6px; font-size: 0.82rem; font-weight: 600; backdrop-filter: blur(10px); }
+
+.project-content { padding: 30px; }
+.project-content p { color: var(--text-muted); margin-bottom: 20px; line-height: 1.7; }
+.project-result { border-top: 1px solid var(--light-gray); padding-top: 20px; margin-top: 20px; }
+.project-result strong { color: var(--accent-light); display: block; margin-bottom: 10px; font-size: 1rem; }
+.project-result ul { list-style: none; color: var(--text-muted); }
+.project-result li { padding: 6px 0; padding-left: 22px; position: relative; font-size: 0.95rem; }
+.project-result li::before { content: '→'; position: absolute; left: 0; color: var(--success); }
+
+.demo-cta {
+    text-align: center; margin-top: 70px; padding: 50px 40px;
+    background: linear-gradient(135deg, rgba(0,102,255,0.08) 0%, rgba(139,92,246,0.04) 100%);
+    border: 2px solid var(--light-gray); border-radius: 20px; transition: all 0.4s; position: relative; overflow: hidden;
+}
+.demo-cta::before {
+    content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(0,102,255,0.05) 0%, transparent 50%); animation: rotate 20s linear infinite;
+}
+.demo-cta:hover { border-color: var(--accent); box-shadow: 0 20px 60px rgba(0,102,255,0.1); }
+.demo-cta h3 { font-size: 1.8rem; margin-bottom: 15px; color: var(--accent-light); position: relative; }
+.demo-cta p { color: var(--text-muted); margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto; position: relative; }
+.demo-cta-buttons { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 25px; position: relative; }
+
+/* ===== PORTFOLIO ===== */
+.portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-top: 60px; }
+.portfolio-card {
+    background: var(--medium-gray); border: 1px solid var(--light-gray); border-radius: 12px;
+    overflow: hidden; transition: all 0.4s; position: relative;
+}
+.portfolio-card:hover { border-color: var(--accent); transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,102,255,0.15); }
+.portfolio-preview { width: 100%; height: 180px; overflow: hidden; position: relative; background: #000; }
+.portfolio-preview img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+.portfolio-card:hover .portfolio-preview img { transform: scale(1.1); }
+.portfolio-preview::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 50%;
+    background: linear-gradient(transparent, rgba(0,0,0,0.8)); pointer-events: none;
+}
+.portfolio-info { padding: 20px; }
+.portfolio-info h3 { font-size: 1.1rem; margin-bottom: 8px; color: var(--text); }
+.portfolio-info p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; margin-bottom: 15px; }
+.portfolio-link { color: var(--accent-light); text-decoration: none; font-weight: 600; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 5px; transition: all 0.3s; }
+.portfolio-link:hover { color: var(--text); gap: 10px; }
+
+/* ===== CONTACT ===== */
+.contact {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+    color: var(--text); text-align: center; padding: 120px 5%; position: relative; overflow: hidden;
+}
+.contact::before {
+    content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 50%);
+    animation: pulse 8s ease-in-out infinite; pointer-events: none;
+}
+.contact h2 { font-size: 3rem; font-weight: 900; margin-bottom: 20px; letter-spacing: -2px; position: relative; }
+.contact > p { font-size: 1.2rem; max-width: 700px; margin: 0 auto 30px; font-weight: 500; opacity: 0.95; position: relative; }
+.contact-info { font-size: 1.3rem; font-weight: 600; margin-bottom: 40px; line-height: 1.8; position: relative; }
+.contact-buttons { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; position: relative; }
+.contact-button {
+    display: inline-block; background: var(--black); color: var(--text); padding: 20px 40px;
+    text-decoration: none; font-weight: 700; font-size: 1.1rem; border-radius: 10px; transition: all 0.3s;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative; overflow: hidden;
+}
+.contact-button::before {
+    content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0; background: var(--accent);
+    border-radius: 50%; transform: translate(-50%, -50%); transition: all 0.5s; z-index: 0;
+}
+.contact-button:hover::before { width: 400px; height: 400px; }
+.contact-button:hover { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(0,0,0,0.4); }
+.contact-button > * { position: relative; z-index: 1; }
+.contact-button.secondary { background: transparent; border: 2px solid var(--black); }
+.contact-button.secondary:hover { background: var(--black); }
+
+/* ===== FOOTER ===== */
+footer { background: var(--black); padding: 40px 5%; text-align: center; border-top: 1px solid var(--light-gray); position: relative; z-index: 1; }
+footer p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 8px; }
+footer a { color: var(--accent-light); text-decoration: none; transition: color 0.3s; }
+footer a:hover { color: var(--text); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 968px) {
+    .hero-container { grid-template-columns: 1fr; gap: 50px; text-align: center; }
+    .hero-content h1 { font-size: 2.8rem; }
+    .hero-photo { order: -1; }
+    .hero-photo img { max-width: 350px; margin: 0 auto; }
+    .hero-tags, .hero-contacts, .salary-block .values { justify-content: center; }
+    .hero-content .description { margin-left: auto; margin-right: auto; }
+    nav ul { gap: 20px; font-size: 0.9rem; }
+    .timeline-item { margin-left: 30px; padding: 30px; }
+    .timeline-item::before { left: -36px; }
+}
+@media (max-width: 600px) {
+    .hero-content h1 { font-size: 2.2rem; }
+    .section-title { font-size: 2rem; }
+    .timeline-header { flex-direction: column; }
+    .contact h2 { font-size: 2.2rem; }
+    .skills-grid, .projects-grid { grid-template-columns: 1fr; }
+    .stat-number { font-size: 2.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<div class="cursor"></div>
+<div class="cursor-dot"></div>
+
+<!-- Scroll Progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Background Effects -->
+<div class="bg-grid"></div>
+<div class="floating-blob blob-1"></div>
+<div class="floating-blob blob-2"></div>
+<div class="floating-blob blob-3"></div>
+<div class="particles" id="particles"></div>
+
+<!-- Navigation -->
+<nav id="navbar">
+    <ul>
+        <li><a href="#about">Обо мне</a></li>
+        <li><a href="#skills">Навыки</a></li>
+        <li><a href="#experience">Опыт</a></li>
+        <li><a href="#projects">Инструменты</a></li>
+        <li><a href="#portfolio">Портфолио</a></li>
+        <li><a href="#contact">Контакты</a></li>
+    </ul>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-container">
+        <div class="hero-photo">
+            <div class="hero-photo-wrapper">
+                <img src="photo.png" alt="Хайрльварин Булат — Коммуникационный дизайнер">
+                <div class="tech-badge">Брендинг</div>
+                <div class="tech-badge">JSX</div>
+                <div class="tech-badge">Python</div>
+            </div>
+        </div>
+        <div class="hero-content">
+            <h1>Хайрльварин Булат</h1>
+            <div class="title">Коммуникационный дизайнер & Design Technologist</div>
+            <p class="description">
+                Создаю целостные визуальные системы и бренд-коммуникации across all touchpoints 
+                (упаковка, полиграфия, digital, навигация). Моя суперсила — умение не только разрабатывать 
+                дизайн, но и автоматизировать его тиражирование с помощью кода (JSX, Python), 
+                обеспечивая идеальную консистентность и скорость там, где другие тонут в рутине.
+            </p>
+            <div class="hero-tags">
+                <span class="tag">Коммуникационный дизайн</span>
+                <span class="tag">Брендинг и айдентика</span>
+                <span class="tag">Дизайн упаковки</span>
+                <span class="tag">Prepress</span>
+                <span class="tag">Figma</span>
+                <span class="tag">Adobe CC</span>
+                <span class="tag">Python / JSX</span>
+                <span class="tag">Автоматизация</span>
+                <span class="tag">AI-инструменты</span>
+            </div>
+            
+            <div class="salary-block">
+                <div class="label">Ожидаемая зарплата (на руки)</div>
+                <div class="values">
+                    <div class="city">
+                        <span class="city-name">📍 Уфа / Удаленно</span>
+                        <span class="city-salary">135 000 ₽</span>
+                    </div>
+                    <div class="city">
+                        <span class="city-name">🏙️ Москва</span>
+                        <span class="city-salary">150 000 ₽</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="relocation-block">
+                <strong>✈️ Готов к переезду в Москву в течение 1 недели</strong>
+                <p>
+                    В случае положительного решения по офферу, готов выехать в Москву в течение 7 дней с момента подписания договора. 
+                    Вопросы с жильём и логистикой решаю самостоятельно. Релокационный пакет не является критическим условием.
+                </p>
+            </div>
+
+            <div class="hero-contacts">
+                <a href="https://t.me/bullez" target="_blank"><span>💬 Telegram</span></a>
+                <a href="mailto:bullez@mail.ru"><span>✉️ Email</span></a>
+                <a href="tel:+79373495308"><span>📱 +7 (937) 349-53-08</span></a>
+                <a href="https://www.behance.net/byllez721e" target="_blank"><span>🎨 Behance</span></a>
+            </div>
+            <a href="#contact" class="cta-button">Связаться со мной</a>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="about animate-on-scroll">
+    <div class="section-header">
+        <h2 class="section-title">Обо мне</h2>
+        <p class="section-subtitle">Дизайнер, который строит масштабируемые визуальные системы</p>
+    </div>
+    <div class="about-content">
+        <p><span class="highlight">Коммуникационный дизайн для меня — это не просто «сделать красиво», а решить бизнес-задачу через стройную визуальную систему.</span> За 10 лет я прошел путь от графического дизайнера до специалиста, который выстраивает бренд-коммуникации на всех уровнях: от айдентики и упаковки до digital и навигации.</p>
+        <p>Моя уникальность — в сочетании <span class="highlight-accent">глубокой экспертизы в брендинге и препрессе</span> с техническим бэкграундом (магистр по информатике). Я не только создаю гайдлайны, но и пишу скрипты (JSX, Python), которые автоматизируют рутину, гарантируя, что каждый макет, каждая этикетка и каждый баннер будут соответствовать стандартам бренда без человеческих ошибок.</p>
+        <p>Ищу роль Коммуникационного дизайнера или Design Technologist в компании, где ценят системный подход, качество исполнения и инновации в рабочих процессах.</p>
+    </div>
+    <div class="stats">
+        <div class="stat-card"><span class="stat-number">10+</span><span class="stat-label">лет в коммуникационном дизайне</span></div>
+        <div class="stat-card"><span class="stat-number">3-5×</span><span class="stat-label">ускорение тиражирования макетов</span></div>
+        <div class="stat-card"><span class="stat-number">70%</span><span class="stat-label">экономия времени на концепты (AI)</span></div>
+        <div class="stat-card"><span class="stat-number">50+</span><span class="stat-label">реализованных бренд-проектов</span></div>
+    </div>
+</section>
+
+<!-- Skills Section -->
+<section id="skills" class="animate-on-scroll">
+    <div class="section-header">
+        <h2 class="section-title">Навыки и компетенции</h2>
+        <p class="section-subtitle">Стратегический дизайн, подкрепленный техническими инструментами</p>
+    </div>
+    <div class="skills-grid">
+        <div class="skill-category">
+            <h3>🎨 Коммуникационный дизайн</h3>
+            <ul class="skill-list">
+                <li>Брендинг, айдентика и визуальные системы</li>
+                <li>Дизайн упаковки (гофрокартон, этикетки, POS)</li>
+                <li>Полиграфический дизайн и Prepress (флексо, офсет)</li>
+                <li>Digital-дизайн (баннеры, соцсети, лендинги)</li>
+                <li>3D-визуализация продуктов и пространств (Blender)</li>
+                <li>Навигация и оформление сред</li>
+            </ul>
+        </div>
+        <div class="skill-category">
+            <h3>💻 Автоматизация и Код</h3>
+            <ul class="skill-list">
+                <li>JSX / JavaScript (скрипты для Adobe Illustrator/InDesign)</li>
+                <li>Python (Telegram-боты, парсинг, обработка файлов)</li>
+                <li>HTML/CSS (лендинги, веб-конфигураторы продуктов)</li>
+                <li>Автоматизация рутинных процессов в дизайн-отделах</li>
+                <li>1С:Предприятие, Opti-Corrugated (интеграция дизайна и производства)</li>
+            </ul>
+        </div>
+        <div class="skill-category">
+            <h3>🛠️ Инструменты и AI</h3>
+            <ul class="skill-list">
+                <li>Adobe Photoshop, Illustrator, InDesign</li>
+                <li>Figma, Corel Draw</li>
+                <li>Битрикс24, Yougile, Trello, Notion</li>
+                <li>AI-инструменты: Midjourney, ChatGPT, Kling, Freepik AI (для ускорения концептов и написания кода)</li>
+                <li>Git, GitHub</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- Experience Section -->
+<section id="experience" class="experience animate-on-scroll">
+    <div class="section-header">
+        <h2 class="section-title">Опыт работы</h2>
+        <p class="section-subtitle">От создания визуальных систем к их технологичному масштабированию</p>
+    </div>
+    <div class="timeline">
+        <div class="timeline-item">
+            <div class="timeline-header">
+                <div class="timeline-title">
+                    <h3>Дизайнер-конструктор упаковки / Коммуникационный дизайнер</h3>
+                    <div class="timeline-company">Добрый Картон, Уфа</div>
+                </div>
+                <div class="timeline-date">Март 2024 — Сентябрь 2026</div>
+            </div>
+            <div class="timeline-content">
+                <ul>
+                    <li>Разработка дизайн-систем и чертежей для гофроупаковки: лотки, самосборные коробки, POS-конструкции.</li>
+                    <li>Согласование технологических карт в 1С:Предприятие и Opti-Corrugated, обеспечение консистентности бренда на производстве.</li>
+                    <li>Нанесение дизайна с учётом технических ограничений станков (допуски, зоны склейки, направление гофры).</li>
+                    <li>Работа с палитрой Pantone, подготовка макетов под флексопечать с разбивкой по цветам.</li>
+                </ul>
+                <div class="achievement">
+                    <strong>🏆 Ключевые достижения (автоматизация коммуникаций):</strong>
+                    <ul>
+                        <li><strong>Kontur na Kontura v2 (JSX):</strong> Апгрейд скрипта для Illustrator. Превращает пунктирную линию в отдельные контуры для резки на плоттере/лазере. Особенности: пакетная обработка (до 100 путей за раз), каждый штрих состоит ровно из 2 точек с 100% сохранением формы кривых Безье благодаря алгоритму Де Кастельжо, автоматическая сборка в группу.</li>
+                        <li><strong>3D-конфигуратор техкарты:</strong> авторасчет формата, генерация 3D-модели, проверка допусков — время подготовки с 40 до 10 минут, исключение брака.</li>
+                        <li><strong>Калькулятор скорости смены заказа (HTML/JS):</strong> менеджеры рассчитывают сроки за 5 минут вместо 2 часов.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-header">
+                <div class="timeline-title">
+                    <h3>Графический дизайнер / Препресс-дизайнер</h3>
+                    <div class="timeline-company">Абсолют-Медиа, Уфа</div>
+                </div>
+                <div class="timeline-date">Декабрь 2025 — Март 2026</div>
+            </div>
+            <div class="timeline-content">
+                <ul>
+                    <li>Разработка дизайна полиграфической и рекламной продукции (баннеры, листовки, календари, сувениры).</li>
+                    <li>Подготовка макетов к печати (prepress): вылеты, цветовые профили, разрешение, технические требования.</li>
+                    <li>Взаимодействие с типографией, адаптация дизайнов под различные форматы и носители.</li>
+                    <li>Создание живой 3D-визуализации продуктов с помощью AI-инструментов.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-header">
+                <div class="timeline-title">
+                    <h3>Python-разработчик / Автоматизация процессов</h3>
+                    <div class="timeline-company">Частная практика, Уфа</div>
+                </div>
+                <div class="timeline-date">Август 2025 — Декабрь 2025</div>
+            </div>
+            <div class="timeline-content">
+                <ul>
+                    <li>Разработка инструментов для оптимизации рутинных задач дизайн-отделов.</li>
+                    <li>Верстка адаптивных лендингов и портфолио на HTML/CSS.</li>
+                </ul>
+                <div class="achievement">
+                    <strong>🏆 Проекты:</strong>
+                    <ul>
+                        <li>Telegram-бот для автоматического наложения изображений на шаблоны, масштабирования и сортировки файлов (сокращение ручной работы на 70%).</li>
+                        <li>Telegram-бот-парсер: мониторинг каналов по ключевым словам, фильтрация контента, формирование сводок.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-header">
+                <div class="timeline-title">
+                    <h3>Старший графический дизайнер / Руководитель дизайн-отдела</h3>
+                    <div class="timeline-company">Студия дизайна «Банан», Уфа</div>
+                </div>
+                <div class="timeline-date">Сентябрь 2019 — Август 2025</div>
+            </div>
+            <div class="timeline-content">
+                <ul>
+                    <li>Разработка фирменных стилей, логотипов, бренд-гайдов и визуальных систем для компаний из сфер финтеха, ритейла, ИБ, entertainment, ТВ и радио.</li>
+                    <li>Курирование полиграфической, digital- и презентационной продукции. Контроль качества макетов и соблюдения сроков.</li>
+                </ul>
+                <div class="achievement">
+                    <strong>🏆 Ключевые достижения:</strong>
+                    <ul>
+                        <li>Оптимизация рабочих процессов с помощью AI-инструментов (ChatGPT, Midjourney) — сокращение времени разработки концептов на 70%.</li>
+                        <li>Создание Telegram-бота для автоматизации рутинных задач дизайнеров.</li>
+                        <li>Выполненные проекты: фирменный стиль к юбилею города, айдентика ТЦ, редизайн регионального ТВ-канала, визуальное продвижение радиостанций.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-header">
+                <div class="timeline-title">
+                    <h3>Старший графический дизайнер</h3>
+                    <div class="timeline-company">Нефтяная кухня (образовательный проект)</div>
+                </div>
+                <div class="timeline-date">Сентябрь 2017 — Март 2020</div>
+            </div>
+            <div class="timeline-content">
+                <ul>
+                    <li>Разработка дизайн-системы для образовательного стартап-проекта в партнёрстве с Роснефть, Татнефть, СИБУР, Башнефть.</li>
+                    <li>Полный цикл сопровождения: от концепции и прототипов до финальной реализации и внедрения.</li>
+                    <li>Координация работы с подрядчиками и смежными специалистами (видео, копирайт, маркетинг).</li>
+                </ul>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-header">
+                <div class="timeline-title">
+                    <h3>Программист-разработчик (C#)</h3>
+                    <div class="timeline-company">Уфимский научно-технический центр (УНТЦ)</div>
+                </div>
+                <div class="timeline-date">Август 2019 — Октябрь 2019</div>
+            </div>
+            <div class="timeline-content">
+                <ul>
+                    <li>Разработка корпоративных информационно-аналитических систем.</li>
+                    <li>Моделирование и обработка промысловых данных, разработка ПО для мониторинга месторождений.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-header">
+                <div class="timeline-title">
+                    <h3>Инженер-программист АСУ</h3>
+                    <div class="timeline-company">СКАДтех</div>
+                </div>
+                <div class="timeline-date">Ноябрь 2018 — Сентябрь 2019</div>
+            </div>
+            <div class="timeline-content">
+                <ul>
+                    <li>Разработка конфигураций для SCADA-пакетов (C).</li>
+                    <li>Проектирование интерфейсов взаимодействия SCADA ↔ персонал, сбор требований на объектах заказчика.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Projects Section -->
+<section id="projects" class="animate-on-scroll">
+    <div class="section-header">
+        <h2 class="section-title">Инструменты масштабирования дизайна</h2>
+        <p class="section-subtitle">Собственные разработки, которые обеспечивают скорость и идеальную консистентность бренд-коммуникаций</p>
+    </div>
+    <div class="projects-grid">
+        <div class="project-card">
+            <div class="project-header">
+                <h3>🎨 Kontur na Kontura v2 (JSX)</h3>
+                <div class="project-tech"><span>JSX</span><span>JavaScript</span><span>Automation</span><span>De Casteljau</span></div>
+            </div>
+            <div class="project-content">
+                <p>Апгрейд скрипта для Illustrator. Превращает пунктирную линию в отдельные контуры для резки на плоттере/лазере. Использует алгоритм Де Кастельжо для математически идеального разрезания кривых Безье.</p>
+                <div class="project-result">
+                    <strong>💡 Результат:</strong>
+                    <ul>
+                        <li>Пакетная обработка: выделение до 100 путей с пунктиром за один запуск</li>
+                        <li>Идеальная форма: каждый штрих состоит ровно из 2 точек, кривые сохранены на 100%</li>
+                        <li>Удобство: все созданные штрихи автоматически собираются в одну группу</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="project-card">
+            <div class="project-header">
+                <h3>📦 Конфигуратор техкарты гофроящика</h3>
+                <div class="project-tech"><span>HTML</span><span>JavaScript</span><span>3D</span><span>ГОСТ</span></div>
+            </div>
+            <div class="project-content">
+                <p>Полноценный инструмент для автоматического расчета техкарты гофроящика (типы А1/В1 по ГОСТ 9142-2014): авторасчет формата заготовки, генерация 3D-модели, автоматическая проверка на соответствие допускам гофроагрегата и станков высечки, автооптимизация упаковки на паллеты.</p>
+                <div class="project-result">
+                    <strong>💡 Результат:</strong>
+                    <ul>
+                        <li>Сокращение времени подготовки техкарты с 30–40 минут до 10 минут</li>
+                        <li>Полное исключение ошибок из-за человеческого фактора</li>
+                        <li>Автоматическая проверка совместимости со станками</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="project-card">
+            <div class="project-header">
+                <h3>⚡ Калькулятор смены заказа</h3>
+                <div class="project-tech"><span>HTML</span><span>JavaScript</span><span>Chart.js</span><span>Аналитика</span></div>
+            </div>
+            <div class="project-content">
+                <p>Расчёт производительности линий гофропереработки (шт/час) на основе длины и ширины изделия. Система автоматически определяет «узкое место» производства по диаграммам скоростей, что позволяет менеджеру сразу называть клиенту реальные сроки.</p>
+                <div class="project-result">
+                    <strong>💡 Результат:</strong>
+                    <ul>
+                        <li>Расчет сроков за 5 минут вместо 2 часов ручного труда</li>
+                        <li>Точность прогнозирования выросла до 95%+</li>
+                        <li>Автоматическое определение узких мест производства</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="project-card">
+            <div class="project-header">
+                <h3>🤖 Telegram-боты на Python</h3>
+                <div class="project-tech"><span>Python</span><span>Telegram API</span><span>Automation</span></div>
+            </div>
+            <div class="project-content">
+                <p>Бот для автоматического наложения изображений на шаблоны, масштабирования, переименования и сортировки файлов. Бот-парсер для мониторинга открытых каналов по ключевым словам с фильтрацией по правилам.</p>
+                <div class="project-result">
+                    <strong>💡 Результат:</strong>
+                    <ul>
+                        <li>Сокращение ручной работы дизайнеров на 70%</li>
+                        <li>Автоматическая фильтрация контента по стоп-словам</li>
+                        <li>Формирование структурированных сводок релевантных публикаций</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="demo-cta">
+        <h3>🎯 Протестируйте инструменты прямо сейчас</h3>
+        <p>Все инструменты работают в браузере — не требуют установки. Откройте любой и оцените, как автоматизация экономит время и гарантирует качество.</p>
+        <div class="demo-cta-buttons">
+            <a href="demo-configurator.html" target="_blank" class="cta-button">📦 Конфигуратор техкарты</a>
+            <a href="demo-calculator.html" target="_blank" class="cta-button" style="background: linear-gradient(135deg, var(--accent-light) 0%, var(--accent) 100%);">⚡ Калькулятор скоростей</a>
+        </div>
+    </div>
+</section>
+
+<!-- Portfolio Section -->
+<section id="portfolio" class="animate-on-scroll" style="background: var(--dark-gray); border-top: 1px solid var(--light-gray); border-bottom: 1px solid var(--light-gray);">
+    <div class="section-header">
+        <h2 class="section-title">Портфолио работ</h2>
+        <p class="section-subtitle">Избранные проекты — брендинг, айдентика, полиграфия, визуальные системы</p>
+    </div>
+    <div class="portfolio-grid">
+        <div class="portfolio-card">
+            <div class="portfolio-preview">
+                <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/6e5a44155766071.6908bf961c647.gif" alt="Фирменный стиль к юбилею города" loading="lazy">
+            </div>
+            <div class="portfolio-info">
+                <h3>Фирменный стиль к юбилею города</h3>
+                <p>Разработка полной визуальной системы: логотип, цветовая палитра, носители, наружная реклама.</p>
+                <a href="https://www.behance.net/gallery/155766071/450-let-ufe-(firmennyj-stil-logotip)" target="_blank" class="portfolio-link">Смотреть проект →</a>
+            </div>
+        </div>
+        <div class="portfolio-card">
+            <div class="portfolio-preview">
+                <img src="https://mir-s3-cdn-cf.behance.net/projects/max_808_webp/e2ee87207108023.Y3JvcCw0MTY4LDMyNjAsMCw0NTM.png" alt="Айдентика торгового центра" loading="lazy">
+            </div>
+            <div class="portfolio-info">
+                <h3>Айдентика торгового центра</h3>
+                <p>Ребрендинг крупного ТЦ: новый логотип, навигация, рекламные материалы, digital-присутствие.</p>
+                <a href="https://www.behance.net/gallery/207108023/tc-(brendbuk-logotip-dom-pro-dom)" target="_blank" class="portfolio-link">Смотреть проект →</a>
+            </div>
+        </div>
+        <div class="portfolio-card">
+            <div class="portfolio-preview">
+                <img src="https://mir-s3-cdn-cf.behance.net/projects/max_808_webp/b8b491155762479.Y3JvcCwxMTAwLDg2MCwwLDE3Ng.jpg" alt="Редизайн регионального ТВ-канала" loading="lazy">
+            </div>
+            <div class="portfolio-info">
+                <h3>Редизайн регионального ТВ-канала</h3>
+                <p>Полное обновление визуального стиля: эфирная графика, заставки, оформление студии.</p>
+                <a href="https://www.behance.net/gallery/155762479/telekanal-bst-(firmennyj-stil-logotip)" target="_blank" class="portfolio-link">Смотреть проект →</a>
+            </div>
+        </div>
+        <div class="portfolio-card">
+            <div class="portfolio-preview">
+                <img src="https://mir-s3-cdn-cf.behance.net/projects/max_808_webp/e71db9234257065.Y3JvcCwxNDM4LDExMjUsMzIsMA.png" alt="Презентации" loading="lazy">
+            </div>
+            <div class="portfolio-info">
+                <h3>Презентации</h3>
+                <p>Визуальное продвижение и отчетность для компаний.</p>
+                <a href="https://www.behance.net/gallery/234257065/avtonomnye-gruzoperevozki-Evocargo-(prezentacija)" target="_blank" class="portfolio-link">Смотреть проект →</a>
+            </div>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 60px;">
+        <a href="https://www.behance.net/byllez721e" target="_blank" class="cta-button">🎨 Открыть полное портфолио на Behance</a>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="contact">
+    <h2>Готов к новым вызовам</h2>
+    <p>Ищу позицию Коммуникационного дизайнера или Design Technologist, где смогу применять уникальное сочетание навыков стратегического дизайна и программирования для создания сильных визуальных систем и оптимизации процессов.</p>
+    <div class="contact-info">
+        📍 Уфа, Россия | Готов к переезду в Москву в течение 1 недели<br>
+        🏢 Полная работа в офисе<br>
+        💰 От 135 000 ₽ (Уфа/удаленно) / От 150 000 ₽ (Москва) на руки
+    </div>
+    <div class="contact-buttons">
+        <a href="mailto:bullez@mail.ru" class="contact-button"><span>✉️ Написать на Email</span></a>
+        <a href="https://t.me/bullez" target="_blank" class="contact-button secondary"><span>💬 Telegram</span></a>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <p>© 2026 Хайрльварин Булат Рамилевич</p>
+    <p>Коммуникационный дизайнер & Design Technologist</p>
+    <p style="margin-top: 15px;"><a href="https://www.behance.net/byllez721e" target="_blank">🎨 Портфолио на Behance</a></p>
+    <p style="margin-top: 15px;"><a href="https://disk.yandex.ru/i/S8C7MxWSccYIiA" target="_blank">Резюме на hh.ru</a></p>
+</footer>
+
+<script>
+// ===== CUSTOM CURSOR =====
+const cursor = document.querySelector('.cursor');
+const cursorDot = document.querySelector('.cursor-dot');
+
+document.addEventListener('mousemove', (e) => {
+    cursor.style.left = e.clientX - 10 + 'px';
+    cursor.style.top = e.clientY - 10 + 'px';
+    cursorDot.style.left = e.clientX - 3 + 'px';
+    cursorDot.style.top = e.clientY - 3 + 'px';
+});
+
+document.querySelectorAll('a, button, .tag, .project-card, .portfolio-card').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+});
+
+// ===== SCROLL PROGRESS =====
+window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = (scrollTop / docHeight) * 100;
+    document.getElementById('scrollProgress').style.width = scrollPercent + '%';
+});
+
+// ===== PARTICLES =====
+const particlesContainer = document.getElementById('particles');
+for (let i = 0; i < 30; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+    particle.style.left = Math.random() * 100 + '%';
+    particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+    particle.style.animationDelay = Math.random() * 10 + 's';
+    particle.style.width = (Math.random() * 3 + 1) + 'px';
+    particle.style.height = particle.style.width;
+    particlesContainer.appendChild(particle);
+}
+
+// ===== SCROLL REVEAL =====
+const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+}, observerOptions);
+
+document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+// ===== ACTIVE NAVIGATION =====
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('nav a');
+
+window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (pageYOffset >= sectionTop - 200) current = section.getAttribute('id');
+    });
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href').slice(1) === current) link.classList.add('active');
+    });
+    const navbar = document.getElementById('navbar');
+    if (window.scrollY > 100) navbar.classList.add('scrolled');
+    else navbar.classList.remove('scrolled');
+});
+
+// ===== SMOOTH SCROLL =====
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+});
+
+// ===== TILT EFFECT ON CARDS =====
+document.querySelectorAll('.project-card, .portfolio-card, .stat-card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = (y - centerY) / 20;
+        const rotateY = (centerX - x) / 20;
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
+    });
+    card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+    });
+});
+</script>
+</body>
+</html>

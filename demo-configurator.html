@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Демо: Конфигуратор техкарты гофроящика</title>
+<style>
+  :root{--primary:#2c5aa0;--primary-dark:#1e3d6f;--accent:#e8a838;--bg:#f5f7fa;--card:#ffffff;--text:#2c3e50;--border:#dfe3e8;--success:#27ae60;--error:#e74c3c}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Segoe UI",system-ui,-apple-system,sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;padding:20px;color:var(--text)}
+  .container{max-width:1200px;margin:0 auto}
+  .header{text-align:center;color:#fff;margin-bottom:30px;padding:20px}
+  .header h1{font-size:28px;margin-bottom:8px;text-shadow:0 2px 4px rgba(0,0,0,0.2)}
+  .header p{font-size:14px;opacity:0.9}
+  .warning{background:rgba(255,255,255,0.15);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.2);border-radius:12px;padding:12px 20px;margin-bottom:25px;color:#fff;font-size:13px;display:flex;align-items:center;gap:10px}
+  .card{background:var(--card);border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,0.15);padding:28px;margin-bottom:25px}
+  .card h2{font-size:18px;color:var(--primary);margin-bottom:20px;padding-bottom:12px;border-bottom:3px solid var(--accent);display:flex;align-items:center;gap:10px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin-bottom:20px}
+  .form-group{display:flex;flex-direction:column;gap:6px}
+  .form-group label{font-size:13px;font-weight:600;color:#5a6c7d;text-transform:uppercase;letter-spacing:0.5px}
+  .form-group input,.form-group select{padding:12px 14px;border:2px solid var(--border);border-radius:10px;font-size:15px;background:#f8fafc;transition:all 0.3s}
+  .form-group input:focus,.form-group select:focus{outline:none;border-color:var(--primary);background:#fff;box-shadow:0 0 0 4px rgba(44,90,160,0.1)}
+  .btn-group{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+  .btn{padding:12px 24px;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.3s;background:#e8eef5;color:var(--text)}
+  .btn.active{background:var(--primary);color:#fff;box-shadow:0 4px 12px rgba(44,90,160,0.3)}
+  .btn:hover:not(.active){background:#d5dce8;transform:translateY(-2px)}
+  .btn-primary{background:var(--primary);color:#fff;padding:14px 32px;font-size:16px;border-radius:12px;box-shadow:0 6px 20px rgba(44,90,160,0.3)}
+  .btn-primary:hover{background:var(--primary-dark);transform:translateY(-3px);box-shadow:0 8px 25px rgba(44,90,160,0.4)}
+  .results{background:linear-gradient(135deg,#f8fafc 0%,#e8eef5 100%);border-radius:12px;padding:20px;margin-top:20px}
+  .result-item{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border)}
+  .result-item:last-child{border-bottom:none}
+  .result-label{color:#5a6c7d;font-size:14px}
+  .result-value{font-weight:700;color:var(--primary);font-size:16px}
+  .result-value.error{color:var(--error)}
+  .result-value.success{color:var(--success)}
+  .error-msg{background:#fee;color:var(--error);padding:14px 18px;border-radius:10px;margin:15px 0;border-left:4px solid var(--error);display:none;align-items:center;gap:10px}
+  .error-msg.show{display:flex}
+  
+  /* 3D Visualizer Styles */
+  .visualizer-container{background:linear-gradient(135deg,#f8fafc 0%,#e8eef5 100%);border-radius:12px;padding:20px;margin-top:20px}
+  .three-controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:15px}
+  .three-controls .btn{padding:10px 18px;font-size:13px}
+  #box3d{width:100%;height:500px;display:block;background:linear-gradient(135deg,#ffffff 0%,#f0f4f8 100%);border:2px solid var(--border);border-radius:12px;cursor:grab;touch-action:none;box-shadow:inset 0 2px 10px rgba(0,0,0,0.05)}
+  #box3d:active{cursor:grabbing}
+  .visualizer-hint{font-size:12px;color:#7a8b99;margin-top:10px;text-align:center}
+  
+  .specs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;margin-top:20px}
+  .spec-box{background:#fff;border:2px solid var(--border);border-radius:10px;padding:15px;text-align:center}
+  .spec-label{font-size:12px;color:#7a8b99;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px}
+  .spec-value{font-size:20px;font-weight:700;color:var(--primary)}
+  
+  .footer{text-align:center;color:#fff;margin-top:30px;padding:20px;font-size:13px}
+  .footer a{color:#fff;text-decoration:none;border-bottom:1px dotted rgba(255,255,255,0.5)}
+  .footer a:hover{border-bottom-color:#fff}
+  
+  @media(max-width:768px){
+    .grid{grid-template-columns:1fr}
+    .card{padding:20px}
+    #box3d{height:400px}
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1> Конфигуратор техкарты гофроящика</h1>
+    <p>Автоматический расчёт параметров упаковки по ГОСТ 9142-2014</p>
+  </div>
+  
+  <div class="warning">
+    <span>⚠️</span>
+    <span>Демо-версия — упрощённый функционал для демонстрации</span>
+  </div>
+  
+  <div class="card">
+    <h2>📐 Исходные данные</h2>
+    <div class="btn-group">
+      <button class="btn active" id="typeA1" onclick="setType('A1')">Тип А1 (Стык)</button>
+      <button class="btn" id="typeB1" onclick="setType('B1')">В1 (Перекрытие)</button>
+    </div>
+    
+    <div class="grid">
+      <div class="form-group">
+        <label>Марка гофрокартона</label>
+        <select id="mark">
+          <option value="Т21">Т-21</option>
+          <option value="Т22" selected>Т-22</option>
+          <option value="Т23">Т-23</option>
+          <option value="Т24">Т-24</option>
+          <option value="Т25">Т-25</option>
+          <option value="Т26">Т-26</option>
+          <option value="Т27">Т-27</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label>Профиль гофры</label>
+        <select id="profile">
+          <option value="E">Е (1.5-2 мм)</option>
+          <option value="B" selected>B (3 мм)</option>
+          <option value="C">C (4 мм)</option>
+        </select>
+      </div>
+    </div>
+    
+    <div class="grid">
+      <div class="form-group">
+        <label>Длина L, мм <small style="color:#7a8b99;font-weight:normal">(внутренний размер)</small></label>
+        <input type="number" id="dimL" value="300" min="10" max="3000">
+      </div>
+      
+      <div class="form-group">
+        <label>Ширина W, мм <small style="color:#7a8b99;font-weight:normal">(внутренний размер, ≤ L)</small></label>
+        <input type="number" id="dimW" value="200" min="10" max="3000">
+      </div>
+      
+      <div class="form-group">
+        <label>Высота H, мм <small style="color:#7a8b99;font-weight:normal">(внутренний размер)</small></label>
+        <input type="number" id="dimH" value="200" min="10" max="3000">
+      </div>
+    </div>
+    
+    <div style="text-align:center;margin-top:25px">
+      <button class="btn btn-primary" onclick="calculate()">Рассчитать техкарту</button>
+    </div>
+    
+    <div id="errorMsg" class="error-msg">
+      <span>❌</span>
+      <span>Ошибка: Ширина не может быть больше Длины! (W > L)</span>
+    </div>
+  </div>
+  
+  <div class="card" id="resultsCard" style="display:none">
+    <h2>📊 Результаты расчёта</h2>
+    
+    <div class="results">
+      <div class="result-item">
+        <span class="result-label">Длина развёртки (FL)</span>
+        <span class="result-value" id="resFL">—</span>
+      </div>
+      <div class="result-item">
+        <span class="result-label">Ширина развёртки (FH)</span>
+        <span class="result-value" id="resFH">—</span>
+      </div>
+      <div class="result-item">
+        <span class="result-label">Площадь заготовки</span>
+        <span class="result-value" id="resArea">—</span>
+      </div>
+      <div class="result-item">
+        <span class="result-label">Толщина картона</span>
+        <span class="result-value" id="resThickness">—</span>
+      </div>
+      <div class="result-item" id="aggregateCheck">
+        <span class="result-label">Проверка агрегата</span>
+        <span class="result-value">—</span>
+      </div>
+    </div>
+    
+    <div class="specs-grid">
+      <div class="spec-box">
+        <div class="spec-label">Панель 1 (L)</div>
+        <div class="spec-value" id="specP1">—</div>
+      </div>
+      <div class="spec-box">
+        <div class="spec-label">Панель 2 (W)</div>
+        <div class="spec-value" id="specP2">—</div>
+      </div>
+      <div class="spec-box">
+        <div class="spec-label">Высота корпуса</div>
+        <div class="spec-value" id="specBody">—</div>
+      </div>
+      <div class="spec-box">
+        <div class="spec-label">Клапан склейки</div>
+        <div class="spec-value" id="specGlue">—</div>
+      </div>
+      <div class="spec-box">
+        <div class="spec-label">Изделий в пачке</div>
+        <div class="spec-value" id="specPack">—</div>
+      </div>
+      <div class="spec-box">
+        <div class="spec-label">Рядов на паллете</div>
+        <div class="spec-value" id="specRows">—</div>
+      </div>
+      <div class="spec-box">
+        <div class="spec-label">Всего на паллете</div>
+        <div class="spec-value" id="specTotal">—</div>
+      </div>
+      <div class="spec-box">
+        <div class="spec-label">Высота паллеты</div>
+        <div class="spec-value" id="specPalH">—</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="card" id="visualizerCard" style="display:none">
+    <h2>🎨 3D-модель собранного ящика</h2>
+    
+    <div class="visualizer-container">
+      <div class="three-controls">
+        <button class="btn" id="viewReset" type="button">↺ Сброс вида</button>
+        <button class="btn" id="toggleFlaps" type="button">📂 Открыть клапаны</button>
+        <button class="btn" id="pngBtn" type="button">💾 Сохранить PNG</button>
+      </div>
+      <canvas id="box3d"></canvas>
+      <div class="visualizer-hint">
+        Вращение — зажать мышь и тянуть · Колесо — зум
+      </div>
+    </div>
+  </div>
+  
+  <div class="footer">
+    <p><strong>Что делает этот инструмент:</strong></p>
+    <p>✓ Автоматический расчёт формата заготовки по ГОСТ 9142-2014</p>
+    <p>✓ Проверка совместимости с производственным оборудованием</p>
+    <p>✓ Оптимизация упаковки в пачки и на паллеты</p>
+    <p>✓ 3D-модель собранного четырёхклапанного ящика</p>
+    <p style="margin-top:20px"><a href="https://bullez-cv.static.hf.space/index.html">← Вернуться к портфолио</a></p>
+  </div>
+</div>
+
+<script>
+let currentType='A1';
+let currentData=null;
+
+const PROFILES={
+  'E':{t:2,body:2,flap:2,glue:35},
+  'B':{t:3,body:3,flap:3,glue:40},
+  'C':{t:4,body:4,flap:4,glue:40}
+};
+
+function setType(type){
+  currentType=type;
+  document.getElementById('typeA1').className='btn'+(type==='A1'?' active':'');
+  document.getElementById('typeB1').className='btn'+(type==='B1'?' active':'');
+}
+
+function calculate(){
+  const L=+document.getElementById('dimL').value;
+  const W=+document.getElementById('dimW').value;
+  const H=+document.getElementById('dimH').value;
+  const mark=document.getElementById('mark').value;
+  const profile=document.getElementById('profile').value;
+  
+  const errorMsg=document.getElementById('errorMsg');
+  if(W>L){
+    errorMsg.classList.add('show');
+    return;
+  }
+  errorMsg.classList.remove('show');
+  
+  const prof=PROFILES[profile];
+  const glue=prof.glue;
+  
+  // Calculate panels
+  const p1=Math.round(L+2);
+  const p2=Math.round(W+3);
+  const p3=Math.round(L+3);
+  const p4=Math.round(W+2);
+  const bodyH=Math.round(H+prof.body);
+  const flapH=Math.floor((W+prof.flap)/2);
+  
+  // Calculate full dimensions
+  const FL=glue+p1+p2+p3+p4;
+  const FH=flapH+bodyH+flapH;
+  const area=(FL*FH/1000000).toFixed(3);
+  
+  // Show results
+  document.getElementById('resFL').textContent=FL+' мм';
+  document.getElementById('resFH').textContent=FH+' мм';
+  document.getElementById('resArea').textContent=area+' м²';
+  document.getElementById('resThickness').textContent=prof.t+' мм';
+  
+  // Aggregate check (simplified)
+  const aggCheck=document.getElementById('aggregateCheck');
+  if(FL>3600||FH>2200){
+    aggCheck.innerHTML='<span class="result-label">Проверка агрегата</span><span class="result-value error">❌ Заготовка не проходит по допускам агрегата</span>';
+  }else{
+    aggCheck.innerHTML='<span class="result-label">Проверка агрегата</span><span class="result-value success">✅ Заготовка проходит</span>';
+  }
+  
+  // Specs
+  document.getElementById('specP1').textContent=p1+' мм';
+  document.getElementById('specP2').textContent=p2+' мм';
+  document.getElementById('specBody').textContent=bodyH+' мм';
+  document.getElementById('specGlue').textContent=glue+' мм';
+  document.getElementById('specPack').textContent='10 шт';
+  document.getElementById('specRows').textContent='14 шт';
+  document.getElementById('specTotal').textContent='140 шт';
+  document.getElementById('specPalH').textContent=Math.round(150+14*(bodyH+2))+' мм';
+  
+  // Show cards
+  document.getElementById('resultsCard').style.display='block';
+  document.getElementById('visualizerCard').style.display='block';
+  
+  // Store data for 3D
+  currentData={L,W,H,type:currentType};
+  
+  // Initialize 3D
+  setTimeout(()=>{resizeCanvas();draw3D();},100);
+}
+
+// 3D Visualization Code (extracted from second file)
+const canvas=document.getElementById('box3d');
+const ctx=canvas.getContext('2d');
+let view={yaw:-0.6,pitch:0.4,zoom:1};
+let flapsOpen=0;
+let isAnimating=false;
+let isDragging=false;
+let lx=0,ly=0;
+
+function resizeCanvas(){
+  const r=canvas.parentElement.getBoundingClientRect();
+  canvas.width=r.width-40;
+  canvas.height=500;
+  if(currentData)draw3D();
+}
+
+window.addEventListener('resize',resizeCanvas);
+
+const rotY=(p,a)=>({x:p.x*Math.cos(a)-p.z*Math.sin(a),y:p.y,z:p.x*Math.sin(a)+p.z*Math.cos(a)});
+const rotX=(p,a)=>({x:p.x,y:p.y*Math.cos(a)-p.z*Math.sin(a),z:p.y*Math.sin(a)+p.z*Math.cos(a)});
+
+function project(p,w,h,L,W,H){
+  let q={x:p.x-L/2,y:p.y-H/2,z:p.z-W/2};
+  q=rotY(q,view.yaw);
+  q=rotX(q,view.pitch);
+  const f=800;
+  const s=(f/(f+q.z))*view.zoom*(Math.min(w,h)/Math.max(L,W,H))*0.8;
+  return{x:w/2+q.x*s,y:h/2-q.y*s,z:q.z};
+}
+
+function drawPoly(pts,c,e){
+  ctx.beginPath();
+  ctx.moveTo(pts[0].x,pts[0].y);
+  for(let i=1;i<pts.length;i++)ctx.lineTo(pts[i].x,pts[i].y);
+  ctx.closePath();
+  ctx.fillStyle=c;
+  ctx.fill();
+  ctx.strokeStyle=e;
+  ctx.lineWidth=2;
+  ctx.stroke();
+}
+
+const lerp2=(a,b,t)=>({x:a.x+(b.x-a.x)*t,y:a.y+(b.y-a.y)*t});
+
+function quadStripes(A,B,C,D,vertical){
+  const n=7;
+  for(let i=1;i<n;i++){
+    const t=i/n;
+    const p1=vertical?lerp2(A,B,t):lerp2(A,D,t);
+    const p2=vertical?lerp2(D,C,t):lerp2(B,C,t);
+    ctx.beginPath();
+    ctx.moveTo(p1.x,p1.y);
+    ctx.lineTo(p2.x,p2.y);
+    ctx.strokeStyle='rgba(139,105,60,0.2)';
+    ctx.lineWidth=1;
+    ctx.stroke();
+  }
+}
+
+function drawDim(p1,p2,text,off){
+  const dx=p2.x-p1.x,dy=p2.y-p1.y;
+  const len=Math.hypot(dx,dy);
+  if(len<5)return;
+  const nx=-dy/len*off,ny=dx/len*off;
+  const a={x:p1.x+nx,y:p1.y+ny},b={x:p2.x+nx,y:p2.y+ny};
+  
+  ctx.beginPath();
+  ctx.moveTo(a.x,a.y);
+  ctx.lineTo(b.x,b.y);
+  ctx.strokeStyle='#555';
+  ctx.lineWidth=1.5;
+  ctx.stroke();
+  
+  const an=Math.atan2(b.y-a.y,b.x-a.x);
+  const hl=8;
+  ctx.beginPath();
+  ctx.moveTo(a.x,a.y);ctx.lineTo(a.x+hl*Math.cos(an-0.5),a.y+hl*Math.sin(an-0.5));
+  ctx.moveTo(a.x,a.y);ctx.lineTo(a.x+hl*Math.cos(an+0.5),a.y+hl*Math.sin(an+0.5));
+  ctx.moveTo(b.x,b.y);ctx.lineTo(b.x-hl*Math.cos(an-0.5),b.y-hl*Math.sin(an-0.5));
+  ctx.moveTo(b.x,b.y);ctx.lineTo(b.x-hl*Math.cos(an+0.5),b.y-hl*Math.sin(an+0.5));
+  ctx.stroke();
+  
+  ctx.fillStyle='#000';
+  ctx.font='bold 16px Arial';
+  ctx.textAlign='center';
+  ctx.textBaseline='middle';
+  ctx.fillText(text,(a.x+b.x)/2+nx*0.6,(a.y+b.y)/2+ny*0.6);
+}
+
+function draw3D(){
+  if(!ctx||!currentData)return;
+  
+  const w=canvas.width,h=canvas.height;
+  ctx.clearRect(0,0,w,h);
+  
+  const L=currentData.L,W=currentData.W,H=currentData.H;
+  const cFace='#f4e8d0',cEdge='#8a6a3f',cFlap='#e8d4b8';
+  
+  const v=[
+    {x:0,y:0,z:0},{x:L,y:0,z:0},{x:L,y:0,z:W},{x:0,y:0,z:W},
+    {x:0,y:H,z:0},{x:L,y:H,z:0},{x:L,y:H,z:W},{x:0,y:H,z:W}
+  ];
+  
+  const pv=v.map(p=>project(p,w,h,L,W,H));
+  const faces=[];
+  
+  const addFace=(idx,c,zo=0)=>{
+    const pts=idx.map(i=>pv[i]);
+    faces.push({pts,z:pts.reduce((s,p)=>s+p.z,0)/pts.length+zo,c});
+  };
+  
+  addFace([0,1,2,3],cFace);
+  addFace([0,1,5,4],cFace);
+  addFace([1,2,6,5],cFace);
+  addFace([2,3,7,6],cFace);
+  addFace([3,0,4,7],cFace);
+  
+  const isClosed=flapsOpen<0.05;
+  if(isClosed){
+    addFace([4,5,6,7],cFlap,-1);
+  }else{
+    const angle=flapsOpen*(Math.PI/2);
+    const sinA=Math.sin(angle),cosA=Math.cos(angle);
+    const lenMajor=W/2,lenMinor=W/2;
+    
+    const addFlap=(i1,i2,dir,len,zo)=>{
+      const h1=v[i1],h2=v[i2];
+      const dy=len*sinA,dz=len*cosA;
+      const t1={x:h1.x+dir.x*dz,y:h1.y+dy,z:h1.z+dir.z*dz};
+      const t2={x:h2.x+dir.x*dz,y:h2.y+dy,z:h2.z+dir.z*dz};
+      const pts=[pv[i1],pv[i2],project(t2,w,h,L,W,H),project(t1,w,h,L,W,H)];
+      faces.push({pts,z:pts.reduce((s,p)=>s+p.z,0)/4+zo,c:cFlap});
+    };
+    
+    addFlap(4,5,{x:0,z:1},lenMajor,0);
+    addFlap(7,6,{x:0,z:-1},lenMajor,0);
+    addFlap(7,4,{x:1,z:0},lenMinor,0);
+    addFlap(5,6,{x:-1,z:0},lenMinor,0);
+  }
+  
+  faces.sort((a,b)=>b.z-a.z);
+  faces.forEach(f=>drawPoly(f.pts,f.c,cEdge));
+  
+  ctx.strokeStyle='rgba(139,105,60,0.2)';
+  ctx.lineWidth=1;
+  quadStripes(pv[1],pv[2],pv[6],pv[5],true);
+  quadStripes(pv[2],pv[3],pv[7],pv[6],true);
+  
+  drawDim(pv[0],pv[1],L,30);
+  drawDim(pv[1],pv[2],W,30);
+  drawDim(pv[0],pv[4],H,-30);
+}
+
+// Mouse controls
+canvas.addEventListener('mousedown',e=>{
+  isDragging=true;
+  lx=e.clientX;
+  ly=e.clientY;
+});
+
+window.addEventListener('mouseup',()=>isDragging=false);
+
+window.addEventListener('mousemove',e=>{
+  if(!isDragging)return;
+  view.yaw+=(e.clientX-lx)*0.01;
+  view.pitch=Math.max(-1.5,Math.min(1.5,view.pitch+(e.clientY-ly)*0.01));
+  lx=e.clientX;
+  ly=e.clientY;
+  draw3D();
+});
+
+canvas.addEventListener('wheel',e=>{
+  e.preventDefault();
+  view.zoom=Math.max(0.2,Math.min(5,view.zoom*(e.deltaY>0?0.9:1.1)));
+  draw3D();
+});
+
+// Buttons
+document.getElementById('toggleFlaps').onclick=()=>{
+  if(isAnimating)return;
+  isAnimating=true;
+  const target=flapsOpen>0.5?0:1;
+  const start=flapsOpen;
+  const t0=performance.now();
+  
+  document.getElementById('toggleFlaps').textContent=target?'📁 Закрыть клапаны':' Открыть клапаны';
+  
+  (function anim(t){
+    const p=Math.min((t-t0)/500,1);
+    flapsOpen=start+(target-start)*p;
+    draw3D();
+    if(p<1)requestAnimationFrame(anim);
+    else isAnimating=false;
+  })(t0);
+};
+
+document.getElementById('viewReset').onclick=()=>{
+  view={yaw:-0.6,pitch:0.4,zoom:1};
+  draw3D();
+};
+
+document.getElementById('pngBtn').onclick=()=>{
+  if(!currentData)return;
+  const L=currentData.L,W=currentData.W,H=currentData.H;
+  
+  const out=document.createElement('canvas');
+  out.width=1600;
+  out.height=1200;
+  const o=out.getContext('2d');
+  
+  o.fillStyle='#fff';
+  o.fillRect(0,0,1600,1200);
+  o.fillStyle='#333';
+  o.font='bold 40px Arial';
+  o.textAlign='center';
+  o.fillText('Гофроящик '+L+'×'+W+'×'+H+' мм ('+currentData.type+')',800,50);
+  
+  const views=[
+    {y:-0.6,p:0.4,l:'3/4 Вид'},
+    {y:0,p:0,l:'Спереди'},
+    {y:1.57,p:0,l:'Сбоку'},
+    {y:0,p:1.2,l:'Сверху'}
+  ];
+  
+  const sv={...view},sf=flapsOpen;
+  flapsOpen=0;
+  
+  views.forEach((vw,i)=>{
+    view.yaw=vw.y;
+    view.pitch=vw.p;
+    view.zoom=0.8;
+    draw3D();
+    
+    const ox=(i%2)*800,oy=80+Math.floor(i/2)*550;
+    o.drawImage(canvas,ox,oy,800,550);
+    
+    o.fillStyle='#555';
+    o.font='24px Arial';
+    o.fillText(vw.l,ox+400,oy+530);
+    o.strokeStyle='#ccc';
+    o.strokeRect(ox,oy,800,550);
+  });
+  
+  view=sv;
+  flapsOpen=sf;
+  draw3D();
+  
+  const a=document.createElement('a');
+  a.download='box_'+currentData.type+'_'+L+'×'+W+'×'+H+'.png';
+  a.href=out.toDataURL();
+  a.click();
+};
+
+// Initialize
+window.addEventListener('load',()=>{
+  resizeCanvas();
+});
+</script>
+</body>
+</html>

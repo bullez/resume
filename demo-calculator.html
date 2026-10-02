@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Демо: Калькулятор смены заказа</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0A0A0A;
+            color: #fff;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+        .container { max-width: 1400px; margin: 0 auto; }
+        
+        .demo-banner {
+            background: linear-gradient(135deg, #FFC107 0%, #FF9800 100%);
+            color: #000;
+            padding: 15px 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #0066FF 0%, #3399FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            color: #888;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        @media (max-width: 1024px) {
+            .grid { grid-template-columns: 1fr; }
+        }
+        
+        .panel {
+            background: #1A1A1A;
+            border: 1px solid #2A2A2A;
+            border-radius: 12px;
+            padding: 30px;
+        }
+        
+        .panel h2 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: #3399FF;
+        }
+        
+        .form-group { margin-bottom: 20px; }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #aaa;
+            font-size: 0.95rem;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            background: #0A0A0A;
+            border: 1px solid #2A2A2A;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #0066FF;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #0066FF 0%, #3399FF 100%);
+            color: #fff;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0,102,255,0.3);
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .result-item {
+            background: #0A0A0A;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 3px solid #0066FF;
+            animation: slideIn 0.5s ease;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .result-label {
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 5px;
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #3399FF;
+        }
+        
+        .result-unit {
+            font-size: 0.9rem;
+            color: #888;
+        }
+        
+        .chart-container {
+            margin-top: 30px;
+            background: #0A0A0A;
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid #2A2A2A;
+        }
+        
+        .chart-wrapper {
+            position: relative;
+            height: 400px;
+        }
+        
+        .bottleneck {
+            background: rgba(255,42,42,0.1);
+            border-left: 4px solid #FF2A2A;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            color: #FF6B6B;
+            font-weight: 600;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .info-box {
+            background: rgba(0,102,255,0.05);
+            border: 1px solid #2A2A2A;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        .info-box h3 {
+            color: #3399FF;
+            margin-bottom: 10px;
+        }
+        
+        .info-box ul {
+            list-style: none;
+            color: #aaa;
+        }
+        
+        .info-box li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .info-box li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #00D97E;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            color: #3399FF;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .back-link:hover { color: #fff; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="demo-banner">
+            ⚠️ Демо-версия — упрощённый функционал для демонстрации
+        </div>
+        
+        <h1>Калькулятор смены заказа</h1>
+        <p class="subtitle">Расчёт производительности линий гофропереработки с визуализацией диаграмм скоростей</p>
+        
+        <div class="grid">
+            <div class="panel">
+                <h2>⚙️ Параметры заказа</h2>
+                
+                <div class="form-group">
+                    <label>Длина изделия, мм</label>
+                    <input type="number" id="length" value="600" min="100" max="2000">
+                </div>
+                
+                <div class="form-group">
+                    <label>Ширина изделия, мм</label>
+                    <input type="number" id="width" value="400" min="100" max="2000">
+                </div>
+                
+                <div class="form-group">
+                    <label>Количество в пачке, шт</label>
+                    <input type="number" id="packSize" value="10" min="1" max="50">
+                </div>
+                
+                <div class="form-group">
+                    <label>Время смены, мин</label>
+                    <input type="number" id="shiftTime" value="720" min="480" max="1440">
+                </div>
+                
+                <button class="btn" onclick="calculate()">Рассчитать производительность</button>
+            </div>
+            
+            <div class="panel">
+                <h2>📊 Результаты</h2>
+                <div id="results">
+                    <p style="color: #888; text-align: center; padding: 40px 0;">
+                        Введите параметры и нажмите "Рассчитать"
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="panel">
+            <h2>📈 Диаграмма скоростей</h2>
+            <div class="chart-container">
+                <div class="chart-wrapper">
+                    <canvas id="speedChart"></canvas>
+                </div>
+            </div>
+            <div id="bottleneck"></div>
+        </div>
+        
+        <div class="info-box">
+            <h3>Что делает этот инструмент:</h3>
+            <ul>
+                <li>Автоматический расчёт скорости производства (шт/час)</li>
+                <li>Определение "узкого места" по диаграммам скоростей</li>
+                <li>Прогноз выпуска за смену с учётом простоев</li>
+                <li>Оптимизация планирования производства</li>
+            </ul>
+        </div>
+        
+        <a href="index.html" class="back-link">← Вернуться к портфолио</a>
+    </div>
+
+    <script>
+        let speedChart = null;
+        
+        function calculate() {
+            const L = parseFloat(document.getElementById('length').value);
+            const W = parseFloat(document.getElementById('width').value);
+            const packSize = parseInt(document.getElementById('packSize').value);
+            const shiftTime = parseInt(document.getElementById('shiftTime').value);
+            
+            // Упрощённая модель скорости (демо)
+            const baseSpeed = 200;
+            const lengthFactor = Math.max(0.5, 1 - (L - 500) / 2000);
+            const widthFactor = Math.max(0.5, 1 - (W - 400) / 1500);
+            
+            const speedLength = baseSpeed * lengthFactor;
+            const speedWidth = baseSpeed * widthFactor;
+            const bottleneck = Math.min(speedLength, speedWidth);
+            const speedPerHour = bottleneck * 60;
+            
+            const changeoverTime = 20;
+            const workTime = shiftTime - changeoverTime - 60;
+            const totalOutput = Math.floor(speedPerHour * (workTime / 60));
+            
+            const bottleneckText = speedLength < speedWidth ? 'Длина изделия' : 'Ширина изделия';
+            
+            const resultsHTML = `
+                <div class="results-grid">
+                    <div class="result-item">
+                        <div class="result-label">Скорость по длине</div>
+                        <div class="result-value">${speedLength.toFixed(0)} <span class="result-unit">шт/мин</span></div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-label">Скорость по ширине</div>
+                        <div class="result-value">${speedWidth.toFixed(0)} <span class="result-unit">шт/мин</span></div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-label">Производительность</div>
+                        <div class="result-value">${speedPerHour.toFixed(0)} <span class="result-unit">шт/час</span></div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-label">Выпуск за смену</div>
+                        <div class="result-value">${totalOutput.toLocaleString()} <span class="result-unit">шт</span></div>
+                    </div>
+                </div>
+                
+                <div class="bottleneck">
+                    ⚠️ Узкое место: ${bottleneckText} ограничивает скорость производства
+                </div>
+            `;
+            
+            document.getElementById('results').innerHTML = resultsHTML;
+            
+            // Построение графика
+            drawChart(L, W, speedLength, speedWidth);
+            
+            document.getElementById('bottleneck').innerHTML = `
+                <div class="bottleneck" style="margin-top: 15px;">
+                    🎯 Оптимизация: уменьшите ${bottleneckText === 'Длина изделия' ? 'длину' : 'ширину'} изделия на 10-15% для увеличения скорости на 20-30%
+                </div>
+            `;
+        }
+        
+        function drawChart(L, W, speedL, speedW) {
+            const ctx = document.getElementById('speedChart').getContext('2d');
+            
+            // Данные для графика
+            const sizes = [200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800];
+            const speeds = sizes.map(size => {
+                const factor = Math.max(0.3, 1 - (size - 500) / 2000);
+                return 200 * factor;
+            });
+            
+            // Цвета для столбцов
+            const backgroundColors = sizes.map(size => {
+                if (size === Math.round(L) || size === Math.round(W)) {
+                    return 'rgba(255, 42, 42, 0.8)';
+                }
+                return 'rgba(0, 102, 255, 0.6)';
+            });
+            
+            // Уничтожить старый график
+            if (speedChart) {
+                speedChart.destroy();
+            }
+            
+            // Создание нового графика
+            speedChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: sizes.map(s => `${s} мм`),
+                    datasets: [{
+                        label: 'Скорость (шт/мин)',
+                        data: speeds,
+                        backgroundColor: backgroundColors,
+                        borderColor: 'rgba(0, 102, 255, 1)',
+                        borderWidth: 2,
+                        borderRadius: 8,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(26, 26, 26, 0.9)',
+                            titleColor: '#fff',
+                            bodyColor: '#3399FF',
+                            borderColor: '#2A2A2A',
+                            borderWidth: 1,
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.parsed.y.toFixed(0)} шт/мин`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 250,
+                            ticks: {
+                                color: '#888',
+                                font: {
+                                    size: 12
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(42, 42, 42, 0.5)'
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                color: '#888',
+                                font: {
+                                    size: 12
+                                }
+                            },
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    animation: {
+                        duration: 1000,
+                        easing: 'easeOutQuart'
+                    }
+                }
+            });
+        }
+        
+        // Автоматический расчёт при загрузке
+        window.onload = calculate;
+    </script>
+</body>
+</html>
